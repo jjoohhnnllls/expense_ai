@@ -1,4 +1,3 @@
-#setup
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,5 +5,20 @@
 </head>
 <body>
     <h1>Expense Tracker Running ✅</h1>
+    <a href="/add">Add Expense</a>
+    <h2>ALL EXPENSES</h2>
+
+    <!-- LIST OUT ALL EXPENSES -->
+    <ul>
+    {% for expense in expenses %}
+    <li>
+        ${{ expense["amount"] }} —
+        {{ expense["category"] }} —
+        {{ expense["date"] }}
+        ({{ expense["note"] }})
+    </li>
+    {% endfor %}
+    <!-- .................... -->
+</ul>
 </body>
 </html>
