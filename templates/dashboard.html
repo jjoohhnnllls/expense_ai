@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+<h1>Expense Dashboard</h1>
+
+<h2>Statistics</h2>
+<p>Total Spent: ${{ stats.total }}</p>
+<p>Average Expense: ${{ stats.average }}</p>
+<p>Top Category: {{ stats.max_category }}</p>
+
+<h2>Spending by Category</h2>
+
+<ul>
+{% for category, amount in category_data.items() %}
+    <li>{{ category }} : ${{ amount }}</li>
+{% endfor %}
+</ul>
+
+<a href="/">Back</a>
+
+</body>
+</html>

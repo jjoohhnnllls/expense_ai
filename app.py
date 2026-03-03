@@ -2,6 +2,7 @@
 import sqlite3
 from flask import Flask, render_template, request, redirect
 from flask import Flask, render_template
+from analysis import spending_by_category, basic_stats
 
 # flask setup
 app = Flask(__name__)
@@ -62,7 +63,19 @@ def add_expense():
 
     return render_template("add.html")
 #########################################
+####################################################
+#CREATE DASHBOARD ROUTE
+@app.route("/dashboard")
+def dashboard():
+    category_data = spending_by_category()
+    stats = basic_stats()
 
+    return render_template(
+        "dashboard.html",
+        category_data=category_data,
+        stats=stats
+    )
+####################################################
 #########################################
 if __name__ == "__main__":
     init_db()
