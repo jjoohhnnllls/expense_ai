@@ -1,7 +1,7 @@
 #imports
 import sqlite3
-from flask import Flask, render_template, request, redirect
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect ,jsonify
+import json
 from analysis import spending_by_category, basic_stats
 
 # flask setup
@@ -73,9 +73,11 @@ def dashboard():
     return render_template(
         "dashboard.html",
         category_data=category_data,
-        stats=stats
+        stats=stats,
+        category_data_json = json.dumps(category_data)
     )
 ####################################################
+#pass data into javascript cuz data is in python dictionary
 #########################################
 if __name__ == "__main__":
     init_db()
