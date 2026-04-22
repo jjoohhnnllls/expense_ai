@@ -3,7 +3,7 @@ import sqlite3
 from flask import Flask, render_template, request, redirect ,jsonify
 import json
 from analysis import spending_by_category, basic_stats
-
+from parser import parse_expense
 # flask setup
 app = Flask(__name__)
 #CREATE DATABASE
@@ -77,6 +77,43 @@ def dashboard():
         category_data_json = json.dumps(category_data)
     )
 ####################################################
+
+
+
+####################################################
+#CREATE SMART INPUT ROUTE
+@app.route("/smart", methods=["GET", "POST"])
+def smart_input():
+    if request.method == "POST":
+        text = request.form["text"]
+
+        data = parse_expense(text)
+
+        if data["amount"] is not None:
+            conn = get_db_connection()
+            conn.execute(
+                "INSERT INTO expenses (amount, category, date, note) VALUES (?, ?, ?, ?)",
+                (data["amount"], data["category"], data["date"], data["note"])
+            )
+            conn.commit()
+            conn.close()
+
+        return redirect("/")
+
+    return render_template("smart.html")
+
+
+
+
+
+
+
+
+
+
+
+
+
 #pass data into javascript cuz data is in python dictionary
 #########################################
 if __name__ == "__main__":
